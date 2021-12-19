@@ -1,12 +1,4 @@
-/*
-var array = []
-var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
 
-for (var i = 0; i < checkboxes.length; i++) {
-  array.push(checkboxes[i].value)
-}*/
-
-// DECLARATION OF COMPONENTS
 const inputBox = document.querySelector(".form-control");
 const addButton = document.querySelector("#add-button");
 const todolist = document.querySelector(".todo-list");
@@ -14,8 +6,20 @@ const deleteButton = document.querySelector("#delete-button");
 const completeButton = document.querySelector("#complete-button");
 
 // LOAD TASKS UPON STARTING
-
-displayTasks();
+// If loading for the first time, display sample tasks, else load items from localStorage
+if (localStorage.getItem("Tasks") === null) {
+  let sampleItems =
+    '<li draggable="true"><input type="checkbox" class="task-checkbox"> <label class="task">Here are some sample tasks:</label>'
+    + '<li draggable="true"><input type="checkbox" class="task-checkbox"> <label class="task">Sample task A</label>'
+    + '<li draggable="true"><input type="checkbox" class="task-checkbox"> <label class="task">Sample task B</label>'
+    + '<li draggable="true"><input type="checkbox" class="task-checkbox"> <label class="task">Drag and drop to reorder tasks</label>';
+  todolist.innerHTML = sampleItems;
+  addDragEventListeners();
+  saveState();
+} else {
+  displayTasks();
+  addDragEventListeners();
+}
 
 // ADDING TASKS
 addButton.addEventListener("click", addTask);
@@ -46,7 +50,7 @@ function displayTasks() {
   }
   let listItems = "";
   loadedTaskList.forEach((element) => {
-    listItems += '<li><input type="checkbox" class="task-checkbox"> <label class="task">' + element + '</label>';
+    listItems += '<li draggable="true"><input type="checkbox" class="task-checkbox"> <label class="task">' + element + '</label>';
   });
   todolist.innerHTML = listItems;
   inputBox.value = '';
@@ -64,7 +68,7 @@ function displayTasks() {
   }
   let listItems = "";
   loadedTaskList.forEach((element) => {
-    listItems += '<li class="draggable" draggable="true"><input type="checkbox" class="task-checkbox"> <label class="task">' + element + '</label>';
+    listItems += '<li draggable="true"><input type="checkbox" class="task-checkbox"> <label class="task">' + element + '</label>';
   });
   todolist.innerHTML = listItems;
   inputBox.value = '';
@@ -130,7 +134,7 @@ function saveState() {
 }
 
 // DRAG AND SORT
-//addDragEventListeners();
+
 var dragged;
 var draggedIndex = 0;
 
@@ -177,6 +181,8 @@ function dragDrop(event) {
       droppedIndex = i;
     }
   });
+  // if task is being dragged to a lower slot, it will be put after the drop slot
+  // else task will be put before the drop slot
   if (draggedIndex < droppedIndex) {
     this.parentNode.insertBefore(dragged, this.nextSibling);
   } else {
