@@ -1,0 +1,48 @@
+body {
+  background: #5C5C5C;
+}
+h1 {
+  text-align: center;
+}
+.wrapper {
+  max-width: 400px;
+  width: 100%;
+  margin: 120px auto;
+  /* border-radius: 5px; */
+  padding: 25px;
+  background: white;
+}
+
+.tasklist {
+  /*overflow-y: scroll;*/
+  max-height: 800px;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+li {
+  min-height: 45px;
+  line-height: 45px;
+  background-color: #f2f2f2;
+  padding: 0 15px;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: #888888;
+}
+
+.over {
+    background-color: #c2c2c2;
+}
+
+/*
+.footer {
+  float: right;
+  position: relative;
+}*/
